@@ -62,10 +62,11 @@ module Padrino
         end
 
         def compile_assets(type, extensions = [])
-          asset = assets[@config.send("#{type.to_s}_compiled_asset")]
-          extensions.each do |ext|
-            output_path = self.send("#{type.to_s}_output_path", "application-#{asset.digest}.#{ext}")
-            asset.write_to output_path
+          unless (asset = assets[@config.send("#{type.to_s}_compiled_asset")]).nil?
+            extensions.each do |ext|
+              output_path = self.send("#{type.to_s}_output_path", "application-#{asset.digest}.#{ext}")
+              asset.write_to output_path
+            end
           end
         end
 
